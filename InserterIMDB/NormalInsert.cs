@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InserterIMDB
 {
-    class NormalInsert
+    class NormalInsert : IInsert
     {
         public void InsertData(SqlConnection sqlConn, List<TitleBasic> allTitles)
         {
@@ -20,10 +20,10 @@ namespace InserterIMDB
            "([Tconst],[TitleType],[PrimaryTitle],[OriginalTitle] " +
            ",[IsAdult],[StartYear],[EndYear],[RuntimeMinutes]) " +
             "VALUES " +
-           "('" + myTitle.tconst + "'" +
-           ",'" + myTitle.titleType + "' " +
-          " ,'" + myTitle.primaryTitle + "' " +
-           ",'" + myTitle.originalTitle + "' " +
+           "('" + myTitle.tconst.Replace("'","''") + "'" +
+           ",'" + myTitle.titleType.Replace("'", "''") + "' " +
+          " ,'" + myTitle.primaryTitle.Replace("'", "''") + "' " +
+           ",'" + myTitle.originalTitle.Replace("'", "''") + "' " +
            ", " + (myTitle.isAdult ? 1 : 0) +
            "," + CheckForNull(myTitle.startYear) +
            "," + CheckForNull(myTitle.endYear) +
@@ -42,6 +42,7 @@ namespace InserterIMDB
             }
 
         }
+
         private string CheckForNull(int? input)
         {
             if (input == null)
