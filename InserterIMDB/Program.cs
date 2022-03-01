@@ -16,14 +16,21 @@ namespace InserterIMDB
             List<TitleBasic> allTitles = ReadAllTitles(@"C:\Users\zealand\Downloads\DB Elective\title.basics.tsv\data.tsv", 50000);
             Console.WriteLine("Has read all lines");
 
-            DateTime beforeTime = DateTime.Now;
+            //DateTime beforeTime = DateTime.Now;
             //IInsert myInserter = new NormalInsert();
             //IInsert myInserter = new PreparedInsert();
-            IInsert myInserter = new EfInsert();
-            myInserter.InsertData(sqlConn, allTitles);
-            DateTime afterTime = DateTime.Now;
+            //IInsert myInserter = new EfInsert();
+            //IInsert myInserter = new BulkInsert();
+            //myInserter.InsertData(sqlConn, allTitles);
+            //DateTime afterTime = DateTime.Now;
 
-            Console.WriteLine("It took: " + afterTime.Subtract(beforeTime).TotalSeconds + " seconds");
+            //Console.WriteLine("It took: " + afterTime.Subtract(beforeTime).TotalSeconds + " seconds");
+
+            SqlSelector mySelector = new SqlSelector();
+            foreach (TitleBasic title in mySelector.SelectAllTitles(sqlConn))
+            {
+                Console.WriteLine(title.originalTitle);
+            }
 
             sqlConn.Close();
         }
